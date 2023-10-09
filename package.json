@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "NODE_OPTIONS=\"--max_old_space_size=8096\" astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -13,6 +13,8 @@
     "@astrojs/mdx": "^1.1.1",
     "@astrojs/rss": "^3.0.0",
     "@astrojs/sitemap": "^3.0.1",
-    "astro": "^3.2.3"
+    "@astrojs/tailwind": "^5.0.1",
+    "astro": "^3.2.3",
+    "tailwindcss": "^3.3.3"
   }
 }
