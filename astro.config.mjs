@@ -8,7 +8,7 @@ import { rehypeHeadingIds } from "@astrojs/markdown-remark";
 // https://astro.build/config
 export default defineConfig({
   site: "https://example.com",
-  integrations: [mdx(), sitemap(), tailwind()],
+  integrations: [mdx({optimize: true}), sitemap(), tailwind()],
   markdown: {
     rehypePlugins: [rehypeHeadingIds],
   },
