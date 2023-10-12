@@ -9,12 +9,13 @@ const { heading } = Astro.props;
     {heading.text}
   </a>
   {
+    heading !== undefined &&(
     heading.subheadings.length > 0 && (
       <ul class="list-decimal list-inside pl-4">
         {heading.subheadings.map((subheading: any) => (
-          <Astro.self heading={subheading} />
+          subheading !== undefined &&(<Astro.self heading={subheading} />)
         ))}
       </ul>
-    )
+    ))
   }
 </li>
