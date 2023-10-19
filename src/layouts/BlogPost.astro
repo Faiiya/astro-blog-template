@@ -6,10 +6,15 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import '../styles/global.css';
 import { Image } from 'astro:assets';
+import Whatsapp from "../components/Whatsapp.astro"
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, summary="" , date, updatedDate, heroImage, banner="diseño_paginas_web_abogados", fondoBanner} = Astro.props;
+const { title, summary="" , date, updatedDate, banner="diseño_paginas_web_abogados", fondoBanner="diseño_pagina_web_albacete"} = Astro.props;
+
+import { getImage } from "astro:assets";
+
+const optimizedBackground = await getImage({src: import(`../assets/fondos/${fondoBanner!}.webp`), format: 'webp'})
 ---
 
 <html lang="en">
@@ -17,7 +22,6 @@ const { title, summary="" , date, updatedDate, heroImage, banner="diseño_pagina
 		<BaseHead title={title} description={summary!} />
 		<style>
 			main {
-				width: calc(100% - 2em);
 				max-width: 100%;
 				margin: 0;
 			}
@@ -60,10 +64,8 @@ const { title, summary="" , date, updatedDate, heroImage, banner="diseño_pagina
 		<Header />
 		<main>
 			<article>
-
-
-				<div >
-					<div class="title max-w-7xl mx-auto">
+				<div class="title max-w-6xl mx-auto"  >
+					<div >
 						<div class="date">
 							<FormattedDate date={date!} />
 							{
@@ -74,30 +76,32 @@ const { title, summary="" , date, updatedDate, heroImage, banner="diseño_pagina
 								)
 							}
 						</div>
-						<h1>{title}</h1>
-						<hr />
-						<div class="hero-img">
-							<div
-							class="aspect-[4/1] w-full relative"
-							style={{
-							  backgroundImage: "url('/fondos/" + fondoBanner + "')",
-							  backgroundSize: 'cover',
-							  backgroundPosition: 'center',
-							}}
-						  >
-							<Image 
-							  src={import(`../assets/trabajos/${banner}.webp`)}
-							  alt={title}
-							/>
-						  </div>
-						</div>
+						<h1 class="text-4xl md:text-6xl lg:text-8xl ">{title}</h1>
 					</div>
-					<div class="max-w-3xl mx-auto">
-						<slot />
+					<div class="hero-img mb-4">
+						<div
+						class="aspect-[4/1] w-full relative"
+						style={`
+						  background-image: url(${optimizedBackground.src});
+						  background-size: cover;
+						  background-position: center
+						  `}
+					  >
+						<Image 
+						  src={import(`../assets/trabajos/${banner}.webp`)}
+						  alt={title}
+						  widths={[240, 540, 720, 1080]}
+						  loading={"eager"}
+						/>
+					  </div>
 					</div>
+				</div>
+				<div class="max-w-3xl mx-auto">
+					<slot />
 				</div>
 			</article>
 		</main>
+		<Whatsapp/>
 		<Footer />
 	</body>
 </html>

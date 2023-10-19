@@ -2,12 +2,16 @@
 import { type CollectionEntry, getCollection } from 'astro:content';
 import BlogPost from '../layouts/BlogPost.astro';
 import TableOfContents from '../components/Toc.astro';
+
+Astro.response.headers.set('Cache-Control', 's-maxage=60')
+
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
 	return posts.map((post) => ({
-		params: { slug: post.slug },
+		params: { slug: post.slug.substring(post.slug.lastIndexOf('/') + 1)},
 		props: post,
 	}));
+
 }
 type Props = CollectionEntry<'blog'>;
 

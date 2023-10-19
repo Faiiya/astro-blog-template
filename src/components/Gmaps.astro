@@ -6,15 +6,22 @@ interface Props {
 const { query ="Santander,cantabria,mapa" } = Astro.props;
 const mapSrc = 'https://www.google.com/maps/embed/v1/search?key=AIzaSyBAtHbHZ76dNdC3u9nYWJXsH7hj9m7x9jg&q='+query
 ---
-<div>
-    <iframe
-      title="Mapa local"
-      src={mapSrc}
-      width="100%"
-      height="450"
-      style={{ border: '0' }}
-      allowfullscreen={false}
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
-  </div>
+<head>
+  <script>
+    let map: google.maps.Map;
+    window.initMap = async function (){
+      console.log("aaaaaaaaaaaaaaaa")
+      const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
+      map = new Map(document.getElementById("map") as HTMLElement, {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 8,
+      });
+    } 
+    </script>
+     <script async defer is:inline src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5X9FwOeRSiGuIskn9AeAavg4yZJxCgd0&callback=initMap"></script>
+</head>
+<div id="map"></div>
+<!-- prettier-ignore -->
+
+
+
